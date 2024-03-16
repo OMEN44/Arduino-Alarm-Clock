@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include <Arduino.h>
 
 class SevenSegDisplay
 {
 public:
+    SevenSegDisplay();
     void selectDigit(char number);
     void setDigit(std::vector<bool> digit, int index);
     void displayNumber(int value);

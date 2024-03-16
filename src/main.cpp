@@ -15,25 +15,10 @@ void setup()
     // wait for serial conn
   }
 
-  Serial.println();
-  Serial.println();
-  Serial.println();
-
-  // put your setup code here, to run once:
-  for (int i = 2; i < 13; i++)
-  {
-    pinMode(i, OUTPUT);
-    if (i < 6)
-      digitalWrite(i, LOW);
-    else
-      digitalWrite(i, HIGH);
-  }
-
   // digit select must be high to select and segment pin must be low to enable
 }
 
-// bool setTime = false;
-int hour = 10, min = 24;
+int hour = 10, min = 49;
 unsigned long currentMillis, previousMillis = 0;
 const long interval = 60000;
 
@@ -53,7 +38,6 @@ void loop()
     {
       min = 0;
       hour = hour >= 23 ? 0 : 1 + hour;
-      Serial.println(min + (hour * 100));
     }
   }
 

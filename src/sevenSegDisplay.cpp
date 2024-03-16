@@ -1,6 +1,18 @@
 #include <sevenSegDisplay.hpp>
 #include <Arduino.h>
 
+SevenSegDisplay::SevenSegDisplay()
+{
+    for (int i = 2; i < 13; i++)
+    {
+        pinMode(i, OUTPUT);
+        if (i < 6)
+            digitalWrite(i, LOW);
+        else
+            digitalWrite(i, HIGH);
+    }
+}
+
 void SevenSegDisplay::selectDigit(char number)
 {
     for (int i = 2; i < 6; i++)
