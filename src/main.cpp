@@ -14,17 +14,17 @@ void setup()
   {
     // wait for serial conn
   }
-
+  display.useShiftRegister(true);
   // digit select must be high to select and segment pin must be low to enable
+  pinMode(13, OUTPUT);
 }
 
-int hour = 10, min = 49;
+int hour = 16, min = 11;
 unsigned long currentMillis, previousMillis = 0;
 const long interval = 60000;
 
 void loop()
 {
-
   currentMillis = millis();
 
   if (currentMillis - previousMillis >= interval)
