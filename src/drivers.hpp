@@ -5,9 +5,9 @@
 class ShiftRegister
 {
 private:
-    const int CLOCK;
-    const int DIN;
-    const int LAT;
+    int CLOCK;
+    int DIN;
+    int LAT;
 
 public:
     ShiftRegister(int clockPin, int dataInPin, int latchPin);
@@ -16,8 +16,14 @@ public:
 
 class SevenSegDisplay
 {
+private:
+    ShiftRegister *shiftRegister;
+    bool usingShiftRegister = false;
+
 public:
     SevenSegDisplay();
+    bool useShiftRegister();
+    bool useShiftRegister(bool toggle);
     void selectDigit(char number);
     void setDigit(std::vector<bool> digit, int index);
     void displayNumber(int value);

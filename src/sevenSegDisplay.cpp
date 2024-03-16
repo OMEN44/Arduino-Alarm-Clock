@@ -1,22 +1,48 @@
 #include <drivers.hpp>
 
+bool SevenSegDisplay::useShiftRegister()
+{
+    return this->usingShiftRegister;
+}
+
+bool SevenSegDisplay::useShiftRegister(bool toggle)
+{
+    if (toggle)
+        this->shiftRegister = new ShiftRegister(3, 2, 4);
+    else
+        delete this->shiftRegister;
+    this->usingShiftRegister = toggle;
+    return this->usingShiftRegister;
+}
+
 SevenSegDisplay::SevenSegDisplay()
 {
-    for (int i = 2; i < 13; i++)
+    if (this->usingShiftRegister)
     {
-        pinMode(i, OUTPUT);
-        if (i < 6)
+        for (int i = 5; i < 9; i++)
+        {
+            pinMode(i, OUTPUT);
             digitalWrite(i, LOW);
-        else
-            digitalWrite(i, HIGH);
+        }
+    }
+    else
+    {
+        for (int i = 2; i < 13; i++)
+        {
+            pinMode(i, OUTPUT);
+            if (i < 6)
+                digitalWrite(i, LOW);
+            else
+                digitalWrite(i, HIGH);
+        }
     }
 }
 
 void SevenSegDisplay::selectDigit(char number)
 {
-    for (int i = 2; i < 6; i++)
+    for (int i = 5; i < 9; i++)
     {
-        if (number + 2 == i)
+        if (number + 5 == i)
             digitalWrite(i, HIGH);
         else
             digitalWrite(i, LOW);
@@ -25,11 +51,25 @@ void SevenSegDisplay::selectDigit(char number)
 
 void SevenSegDisplay::setDigit(std::vector<bool> digit, int index)
 {
-    selectDigit(index);
-    for (int i = 0; i < (int)digit.size(); i++)
+    if (!usingShiftRegister)
     {
-        digitalWrite(i + 6, digit[i] ? LOW : HIGH);
-        digitalWrite(i + 6, HIGH);
+        selectDigit(index);
+        for (int i = 0; i < (int)digit.size(); i++)
+        {
+            digitalWrite(i + 6, digit[i] ? LOW : HIGH);
+            digitalWrite(i + 6, HIGH);
+        }
+    }
+    else
+    {
+        std::vector<bool> data;
+        selectDigit(index);
+        for (int i = 0; i < 8; i++)
+        {
+            data.push_back(digit[i] ? false : true);
+        }
+        this->shiftRegister->shift8Bits(data);
+        this->shiftRegister->shift8Bits({true, true, true, true, true, true, true});
     }
 }
 
