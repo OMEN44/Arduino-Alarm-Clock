@@ -1,8 +1,14 @@
 #pragma once
 #include <vector>
+#include <Arduino.h>
 
 class ShiftRegister
 {
+private:
+    const int CLOCK;
+    const int DIN;
+    const int LAT;
+
 public:
     ShiftRegister(int clockPin, int dataInPin, int latchPin);
     void shift8Bits(std::vector<bool> bits);
