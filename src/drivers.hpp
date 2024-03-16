@@ -1,6 +1,13 @@
 #pragma once
 #include <vector>
 
+class ShiftRegister
+{
+public:
+    ShiftRegister(int clockPin, int dataInPin, int latchPin);
+    void shift8Bits(std::vector<bool> bits);
+};
+
 class SevenSegDisplay
 {
 public:
@@ -26,6 +33,4 @@ public:
         {1, 1, 1, 0, 0, 0, 0},  // 7
         {1, 1, 1, 1, 1, 1, 1},  // 8
         {1, 1, 1, 1, 0, 1, 1}}; // 9
-
-private:
 };
