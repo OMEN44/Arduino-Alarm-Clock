@@ -1,7 +1,11 @@
 #include "drivers.hpp"
 
-ShiftRegister::ShiftRegister(int clockPin, int dataInPin, int latchPin) : CLOCK(clockPin), DIN(dataInPin), LAT(latchPin)
+ShiftRegister::ShiftRegister(int clockPin, int dataInPin, int latchPin)
 {
+    this->CLOCK = clockPin;
+    this->DIN = dataInPin;
+    this->LAT = latchPin;
+    Serial.println("inside the shift init");
     for (int i = 0; i < 4; i++)
         pinMode(i + 2, OUTPUT);
 
@@ -12,9 +16,7 @@ ShiftRegister::ShiftRegister(int clockPin, int dataInPin, int latchPin) : CLOCK(
     for (int i = 0; i < 8; i++)
     {
         digitalWrite(CLOCK, HIGH);
-        delay(10);
         digitalWrite(CLOCK, LOW);
-        delay(10);
     }
     digitalWrite(LAT, HIGH);
     digitalWrite(LAT, LOW);
@@ -27,9 +29,7 @@ void ShiftRegister::shift8Bits(std::vector<bool> bits)
     {
         digitalWrite(DIN, bits[7 - i]);
         digitalWrite(CLOCK, HIGH);
-        delay(10);
         digitalWrite(CLOCK, LOW);
-        delay(10);
     }
     digitalWrite(LAT, HIGH);
     digitalWrite(LAT, LOW);
