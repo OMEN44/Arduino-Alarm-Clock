@@ -5,7 +5,7 @@ ShiftRegister::ShiftRegister(int clockPin, int dataInPin, int latchPin)
     this->CLOCK = clockPin;
     this->DIN = dataInPin;
     this->LAT = latchPin;
-    Serial.println("inside the shift init");
+
     for (int i = 0; i < 4; i++)
         pinMode(i + 2, OUTPUT);
 
